@@ -1,0 +1,12 @@
+1. //catalog
+2. //catalog/book[@id='bk101']/author
+3. //catalog/book[@id='bk102']/title
+4. //book[@id='bk103'][1]/price
+5. //book[5]
+6. count(//book)
+7. translate(//book[@id='bk108']/description, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")
+8. translate(//book[@id='bk110']/description, "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+9. //catalog[1]/book/genre[text()='Computer']/parent::*/@id
+10. //catalog[1]/book/title[text()='Paradox Lost']/parent::*
+
+

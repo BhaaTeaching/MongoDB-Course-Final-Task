@@ -1,0 +1,49 @@
+//1.
+CREATE
+(Wiliam:SENDER{ id:1, name:"Wiliam", credit_card:"123-456-789-987" }),
+(Micheal:SENDER{ id:2, name:"Micheal", credit_card:"963-852-741-654" }),
+(Adam:SENDER{ id:3, name:"Adam", credit_card:"888-999-666-222" }),
+
+(Max:RECEIVER{ id:1, name:"Max", cridt_card:"777-888-999-666" }),
+(Mark:RECEIVER{ id:2, name:"Mark", cridet_card:"159-753-987-654" }),
+(Bill:RECEIVER{ id:3, name:"Bill", cridet_card:"753-951-486-624" }),
+
+(Wiliam) - [pass1:PASS{ total:3000 }] -> (Max),
+(Micheal) - [pass2:PASS{ total:100 }] -> (Mark),
+(Adam) - [pass3:PASS{ total:2500 }] -> (Bill),
+
+(Max)- [approve1:PENDING_APPROVED] -> (Wiliam),
+(Mark) - [approve2:APPROVED] -> (Micheal),
+(Bill) - [approve3:APPROVED] -> (Adam)
+
+//2.
+MATCH (sender:SENDER) <-[pass:PENDING_APPROVED]- (recevier:RECEIVER)
+RETURN sender.name
+
+//3.
+MATCH (sender:SENDER) -[]-> (recevier:RECEIVER)
+WHERE recevier.name = "Bill"
+RETURN sender.credit_card
+
+//4.
+MATCH (sender:SENDER) -[pass:PASS]-> (recevier:RECEIVER)
+WHERE sender.name = "Micheal" AND recevier.name = "Mark"
+RETURN pass.total
+
+//5.
+MATCH (sender:SENDER) -[pass:PASS]-> (recevier:RECEIVER)
+RETURN pass.total
+ ORDER BY pass.total desc
+LIMIT 1
+
+//6.
+MATCH (sender:SENDER) -[pass:PASS]- (recevier:RECEIVER)
+WHERE sender.name = "Wiliam" AND recevier.name = "Max"
+ SET pass.total = 5000
+RETURN pass
+
+//7.
+MATCH (sender:SENDER) -[pass:PASS]- (recevier:RECEIVER)
+WHERE sender.name = "Wiliam" AND recevier.name = "Max"
+ SET pass.total = 5000
+RETURN pass
